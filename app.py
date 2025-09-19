@@ -48,7 +48,7 @@ if arquivo:
     df["CPF"] = cpfs[:len(df)]
 
     # 3. Selecionar colunas necessárias
-    colunas_necessarias = ["TREINAMENTO", "CPF", "DATA_INICIO"]
+    colunas_necessarias = ["TREINAMENTO", "CPF", "DATA"]
     df_selecionado = df[colunas_necessarias].copy()
     df_selecionado = df_selecionado.dropna(subset=["CPF"])
 
@@ -58,7 +58,7 @@ if arquivo:
     # 5. Agrupar por tema e data e gerar ZIP
     arquivos_zip = io.BytesIO()
     with ZipFile(arquivos_zip, "w") as zipf:
-        for (tema, data), df_tema in df_selecionado.groupby(["TREINAMENTO", "DATA_INICIO"]):
+        for (tema, data), df_tema in df_selecionado.groupby(["TREINAMENTO", "DATA"]):
             df_tema = df_tema.drop_duplicates(subset=["CPF"])
 
             # Formatar data
@@ -98,4 +98,5 @@ if arquivo:
     arquivos_zip = None
 
     st.write("⚠️ Os dados foram processados e removidos da memória e do disco.")
+
 
